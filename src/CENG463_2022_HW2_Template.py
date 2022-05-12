@@ -6,11 +6,11 @@ import pandas as pd
 import random
 
 # HYPERPARAMETERS
-input_size = 
-output_size = 
-[hidden_layers_sizes] = 
-learning_rate = 
-number_of_epochs = 
+input_size = 10
+output_size = 10
+hidden_layers_sizes = 10
+learning_rate = 0.01
+number_of_epochs = 1
 train_data_path = "./data/drugLibTrain_raw.tsv" # please use relative path like this
 test_data_path = "./data/drugLibTest_raw.tsv" # please use relative path like this
 
