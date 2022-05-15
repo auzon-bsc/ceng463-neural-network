@@ -1,6 +1,7 @@
 # Student Name: Oğuzhan Özer
 # Student ID: 260201039
 
+from matplotlib import pyplot as plt
 import numpy as np
 import pandas as pd
 
@@ -9,7 +10,7 @@ import util
 # HYPERPARAMETERS
 input_size = 7602
 output_size = 10
-hidden_layers_sizes = 100
+hidden_layers_sizes = 50
 learning_rate = 0.01
 number_of_epochs = 5
 
@@ -116,6 +117,8 @@ def train(train_data, train_labels, valid_data, valid_labels):
 
             if index % 400 == 0:  # at each 400th sample, we run validation set to see our model's improvements
                 accuracy, loss = test(valid_data, valid_labels)
+                accuracy_list = np.append(accuracy_list, accuracy)
+                loss_list = np.append(loss_list, loss)
                 print(f"Epoch= {epoch}, Coverage= %{100*(index/len(train_data))}, Accuracy= {accuracy}, Loss= {loss}")
                 # print("Epoch= "+str(epoch)+", Coverage= %" + str(100*(index/len(train_data))) + ", Accuracy= " + str(accuracy) + ", Loss= " + str(loss))
 
@@ -198,9 +201,22 @@ if __name__ == "__main__":
     # count words in validation samples
     valid_x = util.construct_input_values(valid_x, unique_words)
 
-    train(train_x, train_y, valid_x, valid_y)
-    print("Test Scores:")
+    accuracy_list, lost_list = train(train_x, train_y, valid_x, valid_y)
+    x1 = np.linspace(0, len(accuracy_list), len(accuracy_list))
+    x2 = np.linspace(0, len(lost_list), len(lost_list))
+    print(accuracy_list)
+    print(lost_list)
+    
+    plt.figure("Accuracy")
+    plt.plot(x1, accuracy_list)
+    plt.legend("Accuracy")
 
+    plt.figure("Loss")
+    plt.plot(x2, lost_list)
+    plt.legend("Loss")
+    plt.show()
+    
+    print("Test Scores:")
     # count words in test samples
     test_x = util.construct_input_values(test_x, unique_words)
     print(test(test_x, test_y))
